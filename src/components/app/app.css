@@ -1,0 +1,6 @@
+.avia-search {
+  display: flex;
+  flex-direction: column;
+  padding: 200px 0 50px 300px;
+  width: 600px;
+}

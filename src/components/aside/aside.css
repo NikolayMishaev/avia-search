@@ -1,0 +1,116 @@
+.aside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  font-size: 13px;
+  color: #425668;
+}
+
+.aside__fixed {
+  position: fixed;
+  top: 200px;
+  width: 195px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.aside__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.aside__group:first-of-type {
+  margin-bottom: 25px;
+} 
+
+.aside__airlines-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.aside__airlines-item {
+  width: 139px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.aside__input-price {
+ width: 167px;
+}
+
+.aside__label-price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.aside__label-price:first-of-type {
+  margin-bottom: 15px;
+}
+
+.aside__title {
+  font-weight: bold;
+  color: #425668;
+  font-size: 14px;
+}
+
+.aside__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.aside__radio-visible {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #909090;
+  border-radius: 50%;
+  margin-right: 2px;
+}
+
+.aside__radio:checked + .aside__radio-visible {
+  background: no-repeat url(../../images/radio-input.jpg);
+  border: none;
+  width: 13px;
+  height: 13px;
+  }
+
+.aside__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.aside__checkbox-visible {
+  width: 11px;
+  height: 11px;
+  border: 1px solid #777777;
+  display: inline-block;
+  border-radius: 20%;
+  margin-right: 3px;
+}
+
+.aside__checkbox:checked + .aside__checkbox-visible {
+  background: center / 9px no-repeat url(../../images/checkbox_success.png);
+  background-color: #FBEDCA;
+  }
+
+  .aside__label {
+    transition: all .5s;
+  }
+
+  .aside__label:hover {
+  cursor: pointer;
+  opacity: .7;
+  }

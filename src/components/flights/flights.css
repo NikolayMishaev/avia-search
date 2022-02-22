@@ -1,0 +1,19 @@
+.flights {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.flights__button-more {
+    width: 200px;
+    margin: auto;
+    padding: 3px;
+    border: 1px solid black;
+    font-size: 17px;
+    transition: all .5s;
+}
+
+.flights__button-more:hover {
+  cursor: pointer;
+  opacity: .6;
+}
