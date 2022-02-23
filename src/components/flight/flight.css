@@ -14,11 +14,48 @@
   width: 100px;
   height: 25px;
   background: center / contain no-repeat;
+  background-color: #0087C9;
 }
 
-.flight__carrier-logo_type_LO {
-background-image: url(../../images/LO.jpg);
+.flight__carrier-logo_type_BT {
+background-image: url(../../images/BT.jpg);
 }
+
+.flight__carrier-logo_type_AF {
+  background-image: url(../../images/AF.jpg);
+  }
+
+.flight__carrier-logo_type_AZ {
+  background-image: url(../../images/AZ.jpg);
+  }
+
+.flight__carrier-logo_type_SN {
+  background-image: url(../../images/SN.jpg);
+  }
+      
+.flight__carrier-logo_type_AY {
+  background-image: url(../../images/AY.jpg);
+  }
+      
+.flight__carrier-logo_type_KL {
+  background-image: url(../../images/KL.jpg);
+  }
+
+.flight__carrier-logo_type_LO {
+  background-image: url(../../images/LO.jpg);
+  }
+            
+.flight__carrier-logo_type_PC {
+  background-image: url(../../images/PC.jpg);
+  }
+            
+.flight__carrier-logo_type_TK {
+  background-image: url(../../images/TK.jpg);
+  }
+
+.flight__carrier-logo_type_SU {
+  background-image: url(../../images/SU.jpg);
+  }
 
 .flight__price {
   color: #FFF;
