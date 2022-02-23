@@ -14,8 +14,9 @@ export default function Flight({ flight }) {
         </p>
       </div>
       <ul className="routes">
-        <Route legs={flight.legs[0]} carrier={flight.carrier.caption} />
-        <Route legs={flight.legs[1]} carrier={flight.carrier.caption} />
+        {flight.legs.map((i, c) => (
+          <Route key={c} legs={i} carrier={flight.carrier.caption} />
+        ))}
       </ul>
       <button className="flight__button" type="button">
         выбрать

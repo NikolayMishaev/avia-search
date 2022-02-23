@@ -29,7 +29,6 @@ export default function Route({ legs, carrier }) {
   routeDetails.arrivalDate = convertDateRUS(
     format(arrivalDate, "dd.MM.EEEEEE")
   );
-  console.log(routeDetails);
   return (
     <li className="route">
       <div className="route__row">
@@ -79,12 +78,15 @@ export default function Route({ legs, carrier }) {
           </span>
         </div>
       </div>
-      {/* <div className="route__divisor"></div> */}
-      <div className="route__row">
-        <div className="route__divisor route__divisor_type_left"></div>
-        <span className="route__transfer">1 пересадка</span>
-        <div className="route__divisor route__divisor_type_right"></div>
-      </div>
+      {oneTransfer ? (
+        <div className="route__row">
+          <div className="route__divisor route__divisor_type_left"></div>
+          <span className="route__transfer">1 пересадка</span>
+          <div className="route__divisor route__divisor_type_right"></div>
+        </div>
+      ) : (
+        <div className="route__divisor"></div>
+      )}
       <p className="route__airline">Рейс выполняет: {carrier}</p>
     </li>
   );

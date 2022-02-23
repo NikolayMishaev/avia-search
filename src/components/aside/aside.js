@@ -9,6 +9,8 @@ import {
   addPriceFrom,
   addPriceUpTo,
 } from "../../store/filterSlice";
+import { resetFlightsPerPage } from "../../store/paginationSlice";
+import { addAirline, resetAirline } from "../../store/flightsSlice";
 import { addFlight } from "../../store/flightsSlice";
 import { useEffect } from "react";
 
@@ -84,16 +86,21 @@ export default function Aside() {
   }
 
   useEffect(() => {
-    // console.log(data.result);
+    dispatch(resetFlightsPerPage());
+    dispatch(resetAirline());
     const flights = data.result.flights.filter((i) => {
-      return (
+      if (
         checkFilterNumberTransfers(i.flight.legs) &&
         checkFilterPrice(i.flight.price.total.amount) &&
         checkFilterAirlines(i.flight.carrier.airlineCode)
-      );
+      ) {
+        dispatch(addAirline(i.flight.carrier.airlineCode));
+        return true;
+      }
+      return false;
     });
-    console.log(flights);
     dispatch(addFlight(flights));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   return (

@@ -4,6 +4,36 @@ export function convertMinutesToHours(duration) {
   return `${+hours ? `${hours} ч ` : ""}${+minutes ? `${minutes} мин` : ""}`;
 }
 
+export function convertDateRUS(date) {
+  const arrDate = date.split(".");
+  return `${arrDate[0]} ${convertMonthRUS(arrDate[1])}.${convertDayWeekRUS(
+    arrDate[2]
+  )}`;
+}
+
+export function sortFlights(rule) {
+  return function (a, b) {
+    switch (rule) {
+      case "price increase":
+        return (
+          a.props.flight.price.total.amount - b.props.flight.price.total.amount
+        );
+      case "price decrease":
+        return (
+          b.props.flight.price.total.amount - a.props.flight.price.total.amount
+        );
+      case "travel time":
+        return (
+          a.props.flight.legs[0].duration +
+          a.props.flight.legs[1].duration -
+          (b.props.flight.legs[0].duration + b.props.flight.legs[1].duration)
+        );
+      default:
+        return 0;
+    }
+  };
+}
+
 function convertMonthRUS(month) {
   switch (month) {
     case "01":
@@ -54,11 +84,4 @@ function convertDayWeekRUS(day) {
     default:
       return "";
   }
-}
-
-export function convertDateRUS(date) {
-  const arrDate = date.split(".");
-  return `${arrDate[0]} ${convertMonthRUS(arrDate[1])}.${convertDayWeekRUS(
-    arrDate[2]
-  )}`;
 }

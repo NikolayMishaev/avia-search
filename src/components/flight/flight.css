@@ -13,7 +13,7 @@
 .flight__carrier-logo {
   width: 100px;
   height: 25px;
-  background: center / contain no-repeat;
+  background: left center / contain no-repeat;
   background-color: #0087C9;
 }
 
