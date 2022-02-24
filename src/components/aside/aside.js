@@ -16,7 +16,8 @@ import {
   setLoadingStatus,
 } from "../../store/flightsSlice";
 import { addFlight } from "../../store/flightsSlice";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
+import debounce from "debounce";
 
 export default function Aside() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
@@ -24,6 +25,11 @@ export default function Aside() {
   const airlinesList = useSelector((state) => state.flights.airlines);
   const loading = useSelector((state) => state.flights.loading);
   const dispatch = useDispatch();
+
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceUpTo, setPriceUpTo] = useState("");
+
+  console.log(filter.priceFrom);
 
   function handleOnChangeRadio(e) {
     dispatch(toggleSortingCriteria(e.target.value));
@@ -41,13 +47,23 @@ export default function Aside() {
     dispatch(toggleAirlines(e.target.value));
   }
 
+  function handleInputValue({ name, value }) {
+    name === "priceFrom"
+      ? dispatch(addPriceFrom(Number(value || 0)))
+      : dispatch(addPriceUpTo(Number(value || 0)));
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounceFn = useCallback(debounce(handleInputValue, 1000), []);
+
   function handleChangePrice(e) {
     switch (e.target.name) {
       case "priceFrom":
-        dispatch(addPriceFrom(Number(e.target.value)));
+        setPriceFrom(e.target.value);
+        debounceFn({ name: e.target.name, value: e.target.value });
         break;
       case "priceUpTo":
-        dispatch(addPriceUpTo(Number(e.target.value)));
+        setPriceUpTo(e.target.value);
+        debounceFn({ name: e.target.name, value: e.target.value });
         break;
       default:
         break;
@@ -203,7 +219,7 @@ export default function Aside() {
               name="priceFrom"
               type="number"
               min="0"
-              value={filter.priceFrom || ""}
+              value={priceFrom || ""}
               onChange={handleChangePrice}
             />
           </label>
@@ -214,7 +230,7 @@ export default function Aside() {
               name="priceUpTo"
               type="number"
               min="0"
-              value={filter.priceUpTo || ""}
+              value={priceUpTo || ""}
               onChange={handleChangePrice}
             />
           </label>
