@@ -26,13 +26,12 @@ import Airline from "../airline/airline";
 export default function Aside() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const filter = useSelector((state) => state.filter);
-  const { airlines, loading, minimalPrice } = useSelector(
-    (state) => state.flights
-  );
+  const { loading } = useSelector((state) => state.flights);
   const dispatch = useDispatch();
 
   const [priceFrom, setPriceFrom] = useState("");
   const [priceUpTo, setPriceUpTo] = useState("");
+  const [demoSpinner, setDemoSpinner] = useState(false);
 
   function handleOnChangeRadio(e) {
     dispatch(toggleSortingCriteria(e.target.value));
@@ -115,6 +114,9 @@ export default function Aside() {
   }, [filter]);
 
   useEffect(() => {
+    if (demoSpinner) {
+      return;
+    }
     if (loading) {
       setTimeout(() => {
         dispatch(resetFlightsPerPage());
@@ -155,12 +157,23 @@ export default function Aside() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
+  function handleClickButtonDemoSpinner() {
+    setDemoSpinner(!demoSpinner);
+    dispatch(setLoadingStatus(!loading));
+  }
+
   return (
     <aside className="aside">
       <div className="aside__fixed">
         <div
           className={`aside__overlay ${loading ? "aside__overlay_active" : ""}`}
         ></div>
+        <button
+          className="aside__demo-spinner"
+          onClick={handleClickButtonDemoSpinner}
+        >
+          {demoSpinner ? "выключить демо" : "демо спиннер"}
+        </button>
         <div className="aside__group">
           <p className="aside__title">Сортировать</p>
           <label className="aside__label">

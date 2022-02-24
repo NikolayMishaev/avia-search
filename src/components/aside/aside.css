@@ -153,3 +153,18 @@ color: lightgray
     right: -75px;
     top: -3px;
   }
+
+  .aside__demo-spinner {
+    position: absolute;
+    bottom: 40%;
+    left: 25%;
+    transition: all .5s;
+    padding: 5px;
+    z-index: 30;
+  }
+
+  .aside__demo-spinner:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    opacity: .6;
+  }
