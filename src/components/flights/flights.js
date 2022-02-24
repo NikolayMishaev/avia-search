@@ -12,8 +12,8 @@ export default function Flights() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const pagination = useSelector((state) => state.pagination.flightsPerPage);
   const dispatch = useDispatch();
-  function handleClickButton() {
-    dispatch(addFlightsPerPage());
+  function handleClickButton(value) {
+    dispatch(addFlightsPerPage(value));
   }
   return (
     <>
@@ -24,7 +24,7 @@ export default function Flights() {
           </div>
         ) : null}
         {loading ? (
-          <Spinner searchWord="Ищем рейсы..." />
+          <Spinner searchWord="Поиск рейсов..." />
         ) : flights.length ? (
           flights
             .map((i) => <Flight key={i.flightToken} flight={i.flight} />)
@@ -40,11 +40,34 @@ export default function Flights() {
         <button
           className="flights__button-more"
           type="button"
-          onClick={handleClickButton}
+          onClick={() => handleClickButton(2)}
         >
-          Показать еще
+          Показать еще{" "}
+          <span className="flights__button-more flights__button-more_accent">
+            2
+          </span>
         </button>
       ) : null}
+      <div className="flights__button-more-details">
+        <span
+          className="flights__button-more-number-cards"
+          onClick={() => handleClickButton(5)}
+        >
+          5
+        </span>
+        <span
+          className="flights__button-more-number-cards"
+          onClick={() => handleClickButton(10)}
+        >
+          10
+        </span>
+        <span
+          className="flights__button-more-number-cards"
+          onClick={() => handleClickButton(25)}
+        >
+          25
+        </span>
+      </div>
     </>
   );
 }

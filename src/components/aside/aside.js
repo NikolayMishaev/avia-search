@@ -55,10 +55,10 @@ export default function Aside() {
       : dispatch(addPriceUpTo(Number(value || 0)));
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceFnFrom = useCallback(debounce(handleInputValue, 400), []);
+  const debounceFnFrom = useCallback(debounce(handleInputValue, 1000), []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceFnUpTo = useCallback(debounce(handleInputValue, 400), []);
+  const debounceFnUpTo = useCallback(debounce(handleInputValue, 1000), []);
 
   function handleChangePrice(e) {
     switch (e.target.name) {

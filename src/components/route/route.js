@@ -9,6 +9,7 @@ export default function Route({ legs, carrier }) {
   const numberSegments = oneTransfer ? 1 : 0;
   const departureDate = new Date(segments[0].departureDate);
   const arrivalDate = new Date(segments[numberSegments].arrivalDate);
+  const transferDate = new Date(segments[0].arrivalDate);
 
   routeDetails.duration = convertMinutesToHours(legs.duration);
   routeDetails.departureCity = segments[0].departureCity?.caption || "";
@@ -29,6 +30,15 @@ export default function Route({ legs, carrier }) {
   routeDetails.arrivalDate = convertDateRUS(
     format(arrivalDate, "dd.MM.EEEEEE")
   );
+
+  routeDetails.transferCity = segments[0].arrivalCity?.caption || "";
+  routeDetails.transferAirport = segments[0].arrivalAirport?.caption || "";
+  routeDetails.transferCodeAirport = segments[0].arrivalAirport?.uid || "";
+  routeDetails.transferTime = format(transferDate, "HH:mm");
+  routeDetails.transferDate = convertDateRUS(
+    format(transferDate, "dd.MM.EEEEEE")
+  );
+
   return (
     <li className="route">
       <div className="route__row">
@@ -82,6 +92,24 @@ export default function Route({ legs, carrier }) {
         <div className="route__row">
           <div className="route__divisor route__divisor_type_left"></div>
           <span className="route__transfer">1 пересадка</span>
+          <div className="route__transfer-details">
+            <p className="route__transfer-item">Информация о пересадке:</p>
+            <p className="route__transfer-item">
+              город: {routeDetails.transferCity}
+            </p>
+            <p className="route__transfer-item">
+              аэропорт: {routeDetails.transferAirport}{" "}
+              <span className="route__transfer-item route__transfer-item_accent">
+                ({routeDetails.transferCodeAirport})
+              </span>
+            </p>
+            <p className="route__transfer-item">
+              дата: {routeDetails.transferTime}{" "}
+              <span className="route__transfer-item route__transfer-item_accent">
+                {routeDetails.transferDate}
+              </span>
+            </p>
+          </div>
           <div className="route__divisor route__divisor_type_right"></div>
         </div>
       ) : (

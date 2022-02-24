@@ -1,6 +1,7 @@
 .route__row {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .route__row_type_space-between {
@@ -91,4 +92,45 @@ color: #0087C9;
   white-space: nowrap;
   color: #FF8E1D;
   margin: 0 10px;
+  z-index: 20;
+}
+
+.route__transfer:hover {
+  cursor: pointer;
+  opacity: 0;
+}
+
+.route__transfer:hover + .route__transfer-details{
+  opacity: 1;
+}
+
+.route__transfer-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 5px 50px;
+  box-sizing: border-box;
+  align-items: center;
+  border-radius:10px;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  width: 500px;
+  min-height: 50px;
+  text-align: center;
+  background-color: #FFB168;
+  color: black;
+  border: 1px dashed black;
+  z-index: 10;
+  transition: all .8s;
+}
+
+.route__transfer-item {
+  margin: 0;
+}
+
+.route__transfer-item_accent {
+  color:#0087C9;
 }

@@ -6,8 +6,8 @@ const paginationSlice = createSlice({
     flightsPerPage: 2,
   },
   reducers: {
-    addFlightsPerPage(state) {
-      state.flightsPerPage = state.flightsPerPage + 2;
+    addFlightsPerPage(state, action) {
+      state.flightsPerPage = state.flightsPerPage + action.payload;
     },
     resetFlightsPerPage(state) {
       state.flightsPerPage = 2;
