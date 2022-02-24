@@ -92,6 +92,10 @@
   clip: rect(0 0 0 0);
 }
 
+.aside__checkbox:disabled + .aside__checkbox-visible {
+  border-color:lightgray;
+}
+
 .aside__checkbox-visible {
   width: 11px;
   height: 11px;
@@ -99,6 +103,10 @@
   display: inline-block;
   border-radius: 20%;
   margin-right: 3px;
+}
+
+.aside__checkbox-text_disabled{
+color: lightgray
 }
 
 .aside__checkbox:checked + .aside__checkbox-visible {

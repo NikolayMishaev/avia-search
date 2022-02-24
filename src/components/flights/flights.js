@@ -7,21 +7,25 @@ import { addFlightsPerPage } from "../../store/paginationSlice";
 export default function Flights() {
   const flights = useSelector((state) => state.flights.flights);
   const sort = useSelector((state) => state.sort.sortingCriteria);
+  const loading = useSelector((state) => state.flights.loading);
   const pagination = useSelector((state) => state.pagination.flightsPerPage);
   const dispatch = useDispatch();
-  console.log(flights);
-
   function handleClickButton() {
     dispatch(addFlightsPerPage());
   }
-
   return (
     <>
       <ul className="flights">
-        {flights
-          .map((i) => <Flight key={i.flightToken} flight={i.flight} />)
-          .sort(sortFlights(sort))
-          .slice(0, pagination)}
+        {flights.length ? (
+          flights
+            .map((i) => <Flight key={i.flightToken} flight={i.flight} />)
+            .sort(sortFlights(sort))
+            .slice(0, pagination)
+        ) : (
+          <p className="flights__message">
+            По указанным параметрам рейсов нет!
+          </p>
+        )}
       </ul>
       {pagination < flights.length ? (
         <button

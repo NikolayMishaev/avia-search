@@ -5,6 +5,7 @@ const flightsSlice = createSlice({
   initialState: {
     flights: [],
     airlines: [],
+    loading: false,
   },
   reducers: {
     addFlight(state, action) {
@@ -18,9 +19,13 @@ const flightsSlice = createSlice({
     resetAirline(state) {
       state.airlines = [];
     },
+    setLoadingStatus(state, action) {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { addFlight, addAirline, resetAirline } = flightsSlice.actions;
+export const { addFlight, addAirline, resetAirline, setLoadingStatus } =
+  flightsSlice.actions;
 
 export default flightsSlice.reducer;

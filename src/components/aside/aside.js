@@ -10,13 +10,19 @@ import {
   addPriceUpTo,
 } from "../../store/filterSlice";
 import { resetFlightsPerPage } from "../../store/paginationSlice";
-import { addAirline, resetAirline } from "../../store/flightsSlice";
+import {
+  addAirline,
+  resetAirline,
+  setLoadingStatus,
+} from "../../store/flightsSlice";
 import { addFlight } from "../../store/flightsSlice";
 import { useEffect } from "react";
 
 export default function Aside() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const filter = useSelector((state) => state.filter);
+  const airlinesList = useSelector((state) => state.flights.airlines);
+  const loading = useSelector((state) => state.flights.loading);
   const dispatch = useDispatch();
 
   function handleOnChangeRadio(e) {
@@ -85,9 +91,24 @@ export default function Aside() {
     return filter.airlines.includes(airlineCode);
   }
 
+  // useEffect(() => {
+  //   console.log("filter");
+  //   dispatch(setLoadingStatus(true));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [filter]);
+
   useEffect(() => {
     dispatch(resetFlightsPerPage());
-    dispatch(resetAirline());
+    if (
+      filter.oneTransfer ||
+      filter.withoutTransfers ||
+      filter.priceFrom ||
+      filter.priceUpTo
+    ) {
+      if (!filter.airlines.length) {
+        dispatch(resetAirline());
+      }
+    }
     const flights = data.result.flights.filter((i) => {
       if (
         checkFilterNumberTransfers(i.flight.legs) &&
@@ -99,7 +120,10 @@ export default function Aside() {
       }
       return false;
     });
+    console.log(flights.length);
     dispatch(addFlight(flights));
+    // dispatch(setLoadingStatus(false));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
@@ -210,9 +234,19 @@ export default function Aside() {
                   value="BT"
                   checked={filter.airlines.includes("BT")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("BT")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Air Baltic Corporation A/S</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("BT")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Air Baltic Corporation A/S
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -224,9 +258,19 @@ export default function Aside() {
                   value="AF"
                   checked={filter.airlines.includes("AF")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("AF")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Air France</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("AF")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Air France
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -241,9 +285,19 @@ export default function Aside() {
                   value="AZ"
                   checked={filter.airlines.includes("AZ")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("AZ")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Alitalia Societa Aerea Italiana</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("AZ")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Alitalia Societa Aerea Italiana
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -255,9 +309,19 @@ export default function Aside() {
                   value="SN"
                   checked={filter.airlines.includes("SN")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("SN")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Brussels Airlines</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("SN")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Brussels Airlines
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -269,9 +333,19 @@ export default function Aside() {
                   value="AY"
                   checked={filter.airlines.includes("AY")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("AY")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Finnair Oyj</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("AY")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Finnair Oyj
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -283,9 +357,19 @@ export default function Aside() {
                   value="KL"
                   checked={filter.airlines.includes("KL")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("KL")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - KLM</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("KL")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - KLM
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -297,9 +381,19 @@ export default function Aside() {
                   value="LO"
                   checked={filter.airlines.includes("LO")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("LO")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - LOT Polish Airlines</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("LO")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - LOT Polish Airlines
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -314,9 +408,19 @@ export default function Aside() {
                   value="PC"
                   checked={filter.airlines.includes("PC")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("PC")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Pegasus Hava Tasimaciligi A.S.</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("PC")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Pegasus Hava Tasimaciligi A.S.
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -328,9 +432,19 @@ export default function Aside() {
                   value="TK"
                   checked={filter.airlines.includes("TK")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("TK")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - TURK HAVA YOLLARI A.O.</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("TK")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - TURK HAVA YOLLARI A.O.
+                </span>
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -345,9 +459,19 @@ export default function Aside() {
                   value="SU"
                   checked={filter.airlines.includes("SU")}
                   onChange={handleOnChangeAirlines}
+                  disabled={!airlinesList.includes("SU")}
                 />
                 <span className="aside__checkbox-visible"></span>
-                <span> - Аэрофлот - российские авиалинии</span>
+                <span
+                  className={`aside__checkbox-text ${
+                    !airlinesList.includes("SU")
+                      ? "aside__checkbox-text_disabled"
+                      : ""
+                  }`}
+                >
+                  {" "}
+                  - Аэрофлот - российские авиалинии
+                </span>
               </label>
             </li>
           </ul>

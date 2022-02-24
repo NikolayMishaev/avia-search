@@ -17,3 +17,9 @@
   cursor: pointer;
   opacity: .6;
 }
+
+.flights__message {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
