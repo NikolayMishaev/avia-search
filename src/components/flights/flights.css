@@ -11,12 +11,13 @@
     padding: 3px;
     border: 1px solid black;
     font-size: 17px;
-    transition: all .5s;
+    transition: all .6s;
 }
 
 .flights__button-more:hover {
   cursor: pointer;
   opacity: .6;
+  transform: scale(1.05);
 }
 
 .flights__message {
@@ -24,4 +25,16 @@
   font-size: 18px;
   font-weight: bold;
   color: #007EFF;
+}
+
+.flights__total-number-flights {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #007EFF;
+  white-space: nowrap;
+  text-align: center;
 }

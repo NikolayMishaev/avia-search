@@ -15,6 +15,7 @@ import {
   resetAirline,
   setLoadingStatus,
   setMinimalPrice,
+  setTotalFlightsFound,
 } from "../../store/flightsSlice";
 import { addFlight } from "../../store/flightsSlice";
 import { useEffect, useState, useCallback } from "react";
@@ -112,7 +113,6 @@ export default function Aside() {
   }
 
   useEffect(() => {
-    console.log(loading);
     dispatch(setLoadingStatus(true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
@@ -150,9 +150,8 @@ export default function Aside() {
           return false;
         });
         dispatch(setMinimalPrice(priceFrom));
-        console.log("Всего:  " + flights.length);
+        dispatch(setTotalFlightsFound(flights.length));
         dispatch(addFlight(flights));
-        console.log(loading);
         dispatch(setLoadingStatus(false));
       });
     }

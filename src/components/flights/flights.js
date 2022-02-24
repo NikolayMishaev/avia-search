@@ -6,9 +6,10 @@ import { addFlightsPerPage } from "../../store/paginationSlice";
 import Spinner from "../spinner/spinner";
 
 export default function Flights() {
-  const flights = useSelector((state) => state.flights.flights);
+  const { flights, loading, totalFlightsFound } = useSelector(
+    (state) => state.flights
+  );
   const sort = useSelector((state) => state.sort.sortingCriteria);
-  const loading = useSelector((state) => state.flights.loading);
   const pagination = useSelector((state) => state.pagination.flightsPerPage);
   const dispatch = useDispatch();
   function handleClickButton() {
@@ -17,6 +18,11 @@ export default function Flights() {
   return (
     <>
       <ul className="flights">
+        {!loading && flights.length ? (
+          <div className="flights__total-number-flights">
+            Найдено рейсов: {totalFlightsFound}
+          </div>
+        ) : null}
         {loading ? (
           <Spinner searchWord="Ищем рейсы..." />
         ) : flights.length ? (

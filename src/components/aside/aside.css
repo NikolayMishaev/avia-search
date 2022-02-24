@@ -123,7 +123,7 @@ color: lightgray
 
   .aside__label:hover {
   cursor: pointer;
-  opacity: .7;
+  opacity: .5;
   }
 
   .aside__checkbox-price {
