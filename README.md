@@ -2,6 +2,8 @@
 ***
 
 - [деплой](https://avia-search-22.herokuapp.com)
+- [макет](https://disk.yandex.ru/i/wfN42SfhARPvVA)
+- [задание](https://disk.yandex.ru/i/Fele0AxYnYDypQ)
 
 ## Описание
 - страница поиска рейсов
