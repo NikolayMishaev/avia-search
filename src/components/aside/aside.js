@@ -22,8 +22,6 @@ import debounce from "debounce";
 import { getMinValue } from "../../utils/utils";
 
 export default function Aside() {
-  const from1 = useSelector((state) => state.filter.priceFrom);
-  const to1 = useSelector((state) => state.filter.priceUpTo);
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const filter = useSelector((state) => state.filter);
   const { airlines, loading, minimalPrice } = useSelector(
@@ -113,48 +111,53 @@ export default function Aside() {
     return filter.airlines.includes(airlineCode);
   }
 
-  // useEffect(() => {
-  //   console.log("filter");
-  //   dispatch(setLoadingStatus(true));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [filter]);
-
   useEffect(() => {
-    dispatch(resetFlightsPerPage());
-    if (
-      filter.oneTransfer ||
-      filter.withoutTransfers ||
-      filter.priceFrom ||
-      filter.priceUpTo
-    ) {
-      if (!filter.airlines.length) {
-        dispatch(resetAirline());
-      }
-    }
-    const priceFrom = {};
-    const flights = data.result.flights.filter((i) => {
-      if (
-        checkFilterNumberTransfers(i.flight.legs) &&
-        checkFilterPrice(i.flight.price.total.amount) &&
-        checkFilterAirlines(i.flight.carrier.airlineCode)
-      ) {
-        const airlineCode = i.flight.carrier.airlineCode;
-        const amount = i.flight.price.total.amount;
-        priceFrom[airlineCode] = getMinValue(amount, priceFrom[airlineCode]);
-        dispatch(addAirline(airlineCode));
-        return true;
-      }
-      return false;
-    });
-    dispatch(setMinimalPrice(priceFrom));
-    console.log("Всего:  " + flights.length);
-    console.log("От:  " + from1);
-    console.log("До:  " + to1);
-    dispatch(addFlight(flights));
-    // dispatch(setLoadingStatus(false));
-
+    console.log(loading);
+    dispatch(setLoadingStatus(true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
+
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        dispatch(resetFlightsPerPage());
+        if (
+          filter.oneTransfer ||
+          filter.withoutTransfers ||
+          filter.priceFrom ||
+          filter.priceUpTo
+        ) {
+          if (!filter.airlines.length) {
+            dispatch(resetAirline());
+          }
+        }
+        const priceFrom = {};
+        const flights = data.result.flights.filter((i) => {
+          if (
+            checkFilterNumberTransfers(i.flight.legs) &&
+            checkFilterPrice(i.flight.price.total.amount) &&
+            checkFilterAirlines(i.flight.carrier.airlineCode)
+          ) {
+            const airlineCode = i.flight.carrier.airlineCode;
+            const amount = i.flight.price.total.amount;
+            priceFrom[airlineCode] = getMinValue(
+              amount,
+              priceFrom[airlineCode]
+            );
+            dispatch(addAirline(airlineCode));
+            return true;
+          }
+          return false;
+        });
+        dispatch(setMinimalPrice(priceFrom));
+        console.log("Всего:  " + flights.length);
+        dispatch(addFlight(flights));
+        console.log(loading);
+        dispatch(setLoadingStatus(false));
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   return (
     <aside className="aside">

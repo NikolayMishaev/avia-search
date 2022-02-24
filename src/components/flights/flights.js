@@ -3,6 +3,7 @@ import Flight from "../flight/flight";
 import { useSelector, useDispatch } from "react-redux";
 import { sortFlights } from "../../utils/utils";
 import { addFlightsPerPage } from "../../store/paginationSlice";
+import Spinner from "../spinner/spinner";
 
 export default function Flights() {
   const flights = useSelector((state) => state.flights.flights);
@@ -16,7 +17,9 @@ export default function Flights() {
   return (
     <>
       <ul className="flights">
-        {flights.length ? (
+        {loading ? (
+          <Spinner searchWord="Ищем рейсы..." />
+        ) : flights.length ? (
           flights
             .map((i) => <Flight key={i.flightToken} flight={i.flight} />)
             .sort(sortFlights(sort))
@@ -27,7 +30,7 @@ export default function Flights() {
           </p>
         )}
       </ul>
-      {pagination < flights.length ? (
+      {loading ? null : pagination < flights.length ? (
         <button
           className="flights__button-more"
           type="button"
