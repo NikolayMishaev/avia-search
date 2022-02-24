@@ -34,6 +34,13 @@ export function sortFlights(rule) {
   };
 }
 
+export function getMinValue(amount, currentValue) {
+  if (currentValue) {
+    return +amount < +currentValue ? amount : currentValue;
+  }
+  return amount;
+}
+
 function convertMonthRUS(month) {
   switch (month) {
     case "01":

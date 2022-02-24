@@ -6,6 +6,7 @@ const flightsSlice = createSlice({
     flights: [],
     airlines: [],
     loading: false,
+    minimalPrice: {},
   },
   reducers: {
     addFlight(state, action) {
@@ -22,10 +23,18 @@ const flightsSlice = createSlice({
     setLoadingStatus(state, action) {
       state.loading = action.payload;
     },
+    setMinimalPrice(state, action) {
+      state.minimalPrice = action.payload;
+    },
   },
 });
 
-export const { addFlight, addAirline, resetAirline, setLoadingStatus } =
-  flightsSlice.actions;
+export const {
+  addFlight,
+  addAirline,
+  resetAirline,
+  setLoadingStatus,
+  setMinimalPrice,
+} = flightsSlice.actions;
 
 export default flightsSlice.reducer;

@@ -14,22 +14,23 @@ import {
   addAirline,
   resetAirline,
   setLoadingStatus,
+  setMinimalPrice,
 } from "../../store/flightsSlice";
 import { addFlight } from "../../store/flightsSlice";
 import { useEffect, useState, useCallback } from "react";
 import debounce from "debounce";
+import { getMinValue } from "../../utils/utils";
 
 export default function Aside() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const filter = useSelector((state) => state.filter);
-  const airlinesList = useSelector((state) => state.flights.airlines);
-  const loading = useSelector((state) => state.flights.loading);
+  const { airlines, loading, minimalPrice } = useSelector(
+    (state) => state.flights
+  );
   const dispatch = useDispatch();
 
   const [priceFrom, setPriceFrom] = useState("");
   const [priceUpTo, setPriceUpTo] = useState("");
-
-  console.log(filter.priceFrom);
 
   function handleOnChangeRadio(e) {
     dispatch(toggleSortingCriteria(e.target.value));
@@ -125,18 +126,23 @@ export default function Aside() {
         dispatch(resetAirline());
       }
     }
+    const priceFrom = {};
     const flights = data.result.flights.filter((i) => {
       if (
         checkFilterNumberTransfers(i.flight.legs) &&
         checkFilterPrice(i.flight.price.total.amount) &&
         checkFilterAirlines(i.flight.carrier.airlineCode)
       ) {
-        dispatch(addAirline(i.flight.carrier.airlineCode));
+        const airlineCode = i.flight.carrier.airlineCode;
+        const amount = i.flight.price.total.amount;
+        priceFrom[airlineCode] = getMinValue(amount, priceFrom[airlineCode]);
+        dispatch(addAirline(airlineCode));
         return true;
       }
       return false;
     });
-    console.log(flights.length);
+    dispatch(setMinimalPrice(priceFrom));
+    // console.log(flights);
     dispatch(addFlight(flights));
     // dispatch(setLoadingStatus(false));
 
@@ -250,12 +256,12 @@ export default function Aside() {
                   value="BT"
                   checked={filter.airlines.includes("BT")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("BT")}
+                  disabled={!airlines.includes("BT")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("BT")
+                    !airlines.includes("BT")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -263,6 +269,9 @@ export default function Aside() {
                   {" "}
                   - Air Baltic Corporation A/S
                 </span>
+                {minimalPrice["BT"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["BT"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -274,12 +283,12 @@ export default function Aside() {
                   value="AF"
                   checked={filter.airlines.includes("AF")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("AF")}
+                  disabled={!airlines.includes("AF")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("AF")
+                    !airlines.includes("AF")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -287,6 +296,9 @@ export default function Aside() {
                   {" "}
                   - Air France
                 </span>
+                {minimalPrice["AF"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["AF"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -301,12 +313,12 @@ export default function Aside() {
                   value="AZ"
                   checked={filter.airlines.includes("AZ")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("AZ")}
+                  disabled={!airlines.includes("AZ")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("AZ")
+                    !airlines.includes("AZ")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -314,6 +326,9 @@ export default function Aside() {
                   {" "}
                   - Alitalia Societa Aerea Italiana
                 </span>
+                {minimalPrice["AZ"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["AZ"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -325,12 +340,12 @@ export default function Aside() {
                   value="SN"
                   checked={filter.airlines.includes("SN")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("SN")}
+                  disabled={!airlines.includes("SN")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("SN")
+                    !airlines.includes("SN")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -338,6 +353,9 @@ export default function Aside() {
                   {" "}
                   - Brussels Airlines
                 </span>
+                {minimalPrice["SN"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["SN"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -349,12 +367,12 @@ export default function Aside() {
                   value="AY"
                   checked={filter.airlines.includes("AY")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("AY")}
+                  disabled={!airlines.includes("AY")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("AY")
+                    !airlines.includes("AY")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -362,6 +380,9 @@ export default function Aside() {
                   {" "}
                   - Finnair Oyj
                 </span>
+                {minimalPrice["AY"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["AY"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -373,12 +394,12 @@ export default function Aside() {
                   value="KL"
                   checked={filter.airlines.includes("KL")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("KL")}
+                  disabled={!airlines.includes("KL")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("KL")
+                    !airlines.includes("KL")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -386,6 +407,9 @@ export default function Aside() {
                   {" "}
                   - KLM
                 </span>
+                {minimalPrice["KL"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["KL"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -397,12 +421,12 @@ export default function Aside() {
                   value="LO"
                   checked={filter.airlines.includes("LO")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("LO")}
+                  disabled={!airlines.includes("LO")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("LO")
+                    !airlines.includes("LO")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -410,6 +434,9 @@ export default function Aside() {
                   {" "}
                   - LOT Polish Airlines
                 </span>
+                {minimalPrice["LO"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["LO"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -424,12 +451,12 @@ export default function Aside() {
                   value="PC"
                   checked={filter.airlines.includes("PC")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("PC")}
+                  disabled={!airlines.includes("PC")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("PC")
+                    !airlines.includes("PC")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -437,6 +464,9 @@ export default function Aside() {
                   {" "}
                   - Pegasus Hava Tasimaciligi A.S.
                 </span>
+                {minimalPrice["PC"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["PC"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -448,12 +478,12 @@ export default function Aside() {
                   value="TK"
                   checked={filter.airlines.includes("TK")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("TK")}
+                  disabled={!airlines.includes("TK")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("TK")
+                    !airlines.includes("TK")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -461,6 +491,9 @@ export default function Aside() {
                   {" "}
                   - TURK HAVA YOLLARI A.O.
                 </span>
+                {minimalPrice["TK"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["TK"]} р.`}</span>
+                ) : null}
               </label>
             </li>
             <li className="aside__airlines-item">
@@ -475,12 +508,12 @@ export default function Aside() {
                   value="SU"
                   checked={filter.airlines.includes("SU")}
                   onChange={handleOnChangeAirlines}
-                  disabled={!airlinesList.includes("SU")}
+                  disabled={!airlines.includes("SU")}
                 />
                 <span className="aside__checkbox-visible"></span>
                 <span
                   className={`aside__checkbox-text ${
-                    !airlinesList.includes("SU")
+                    !airlines.includes("SU")
                       ? "aside__checkbox-text_disabled"
                       : ""
                   }`}
@@ -488,6 +521,9 @@ export default function Aside() {
                   {" "}
                   - Аэрофлот - российские авиалинии
                 </span>
+                {minimalPrice["SU"] ? (
+                  <span className="aside__checkbox-price">{`от ${minimalPrice["SU"]} р.`}</span>
+                ) : null}
               </label>
             </li>
           </ul>
