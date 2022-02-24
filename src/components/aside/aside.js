@@ -234,6 +234,7 @@ export default function Aside() {
               name="priceFrom"
               type="number"
               min="0"
+              step="5000"
               value={priceFrom || ""}
               onChange={handleChangePrice}
             />
@@ -245,6 +246,7 @@ export default function Aside() {
               name="priceUpTo"
               type="number"
               min="0"
+              step="5000"
               value={priceUpTo || ""}
               onChange={handleChangePrice}
             />

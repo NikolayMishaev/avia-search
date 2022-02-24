@@ -95,3 +95,9 @@ background-image: url(../../images/BT.jpg);
   opacity: .7;
   transform: scale(1.025);
 }
+
+.flight__button_active {
+  background-color: #10e92d;
+  color:black;
+  font-weight: bold;
+}

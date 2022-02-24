@@ -34,8 +34,19 @@
   list-style-type: none;
 }
 
+.aside__airlines-item {
+display: flex;
+}
+
 .aside__input-price {
  width: 167px;
+ transition: all .6s;
+ font-weight: bold;
+ color:#425668;
+}
+
+.aside__input-price:hover {
+  background-color: rgb(175, 223, 255);
 }
 
 .aside__label-price {
@@ -123,7 +134,7 @@ color: lightgray
 
   .aside__label:hover {
   cursor: pointer;
-  opacity: .5;
+  transform: translateX(-4px);
   }
 
   .aside__checkbox-price {
