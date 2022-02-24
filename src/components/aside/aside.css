@@ -10,6 +10,21 @@
   color: #425668;
 }
 
+.aside__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 125%;
+  height: 100%;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.aside__overlay_active {
+  z-index: 10;
+}
+
 .aside__fixed {
   position: fixed;
   top: 200px;

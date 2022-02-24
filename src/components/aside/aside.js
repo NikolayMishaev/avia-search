@@ -161,6 +161,9 @@ export default function Aside() {
   return (
     <aside className="aside">
       <div className="aside__fixed">
+        <div
+          className={`aside__overlay ${loading ? "aside__overlay_active" : ""}`}
+        ></div>
         <div className="aside__group">
           <p className="aside__title">Сортировать</p>
           <label className="aside__label">

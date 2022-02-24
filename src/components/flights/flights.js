@@ -48,26 +48,28 @@ export default function Flights() {
           </span>
         </button>
       ) : null}
-      <div className="flights__button-more-details">
-        <span
-          className="flights__button-more-number-cards"
-          onClick={() => handleClickButton(5)}
-        >
-          5
-        </span>
-        <span
-          className="flights__button-more-number-cards"
-          onClick={() => handleClickButton(10)}
-        >
-          10
-        </span>
-        <span
-          className="flights__button-more-number-cards"
-          onClick={() => handleClickButton(25)}
-        >
-          25
-        </span>
-      </div>
+      {loading ? null : pagination < flights.length ? (
+        <div className="flights__button-more-details">
+          <span
+            className="flights__button-more-number-cards"
+            onClick={() => handleClickButton(5)}
+          >
+            5
+          </span>
+          <span
+            className="flights__button-more-number-cards"
+            onClick={() => handleClickButton(10)}
+          >
+            10
+          </span>
+          <span
+            className="flights__button-more-number-cards"
+            onClick={() => handleClickButton(25)}
+          >
+            25
+          </span>
+        </div>
+      ) : null}
     </>
   );
 }
