@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { sortFlights } from "../../utils/utils";
 import { addFlightsPerPage } from "../../store/paginationSlice";
 import Spinner from "../spinner/spinner";
+import { MESSAGES } from "../../utils/constants";
 
 export default function Flights() {
   const { flights, loading, totalFlightsFound } = useSelector(
@@ -20,20 +21,18 @@ export default function Flights() {
       <ul className="flights">
         {!loading && flights.length ? (
           <div className="flights__total-number-flights">
-            Найдено рейсов: {totalFlightsFound}
+            {MESSAGES.findResult} {totalFlightsFound}
           </div>
         ) : null}
         {loading ? (
-          <Spinner searchWord="Поиск рейсов..." />
+          <Spinner searchWord={MESSAGES.flightsSearch} />
         ) : flights.length ? (
           flights
             .map((i) => <Flight key={i.flightToken} flight={i.flight} />)
             .sort(sortFlights(sort))
             .slice(0, pagination)
         ) : (
-          <p className="flights__message">
-            По указанным параметрам рейсов нет!
-          </p>
+          <p className="flights__message">{MESSAGES.emptyResult}</p>
         )}
       </ul>
       {loading ? null : pagination < flights.length ? (

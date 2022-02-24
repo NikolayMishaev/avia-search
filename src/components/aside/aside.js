@@ -5,7 +5,6 @@ import { toggleSortingCriteria } from "../../store/sortSlice";
 import {
   toggleOneTransfer,
   togglewithoutTransfers,
-  toggleAirlines,
   addPriceFrom,
   addPriceUpTo,
 } from "../../store/filterSlice";
@@ -21,6 +20,8 @@ import { addFlight } from "../../store/flightsSlice";
 import { useEffect, useState, useCallback } from "react";
 import debounce from "debounce";
 import { getMinValue } from "../../utils/utils";
+import { AIRLINES_LIST } from "../../utils/constants";
+import Airline from "../airline/airline";
 
 export default function Aside() {
   const sort = useSelector((state) => state.sort.sortingCriteria);
@@ -43,10 +44,6 @@ export default function Aside() {
 
   function handleOnChangewithOutTransfer() {
     dispatch(togglewithoutTransfers());
-  }
-
-  function handleOnChangeAirlines(e) {
-    dispatch(toggleAirlines(e.target.value));
   }
 
   function handleInputValue({ name, value }) {
@@ -258,288 +255,9 @@ export default function Aside() {
         <div className="aside__group">
           <p className="aside__title">Авиакомпании</p>
           <ul className="aside__airlines-list">
-            <li className="aside__airlines-item">
-              <label
-                className="aside__label"
-                title="Air Baltic Corporation A/S"
-              >
-                <input
-                  className="aside__checkbox"
-                  name="BT"
-                  type="checkbox"
-                  value="BT"
-                  checked={filter.airlines.includes("BT")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("BT")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("BT")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Air Baltic Corporation A/S
-                </span>
-                {minimalPrice["BT"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["BT"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="Air France">
-                <input
-                  className="aside__checkbox"
-                  name="AF"
-                  type="checkbox"
-                  value="AF"
-                  checked={filter.airlines.includes("AF")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("AF")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("AF")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Air France
-                </span>
-                {minimalPrice["AF"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["AF"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label
-                className="aside__label"
-                title="Alitalia Societa Aerea Italiana"
-              >
-                <input
-                  className="aside__checkbox"
-                  name="AZ"
-                  type="checkbox"
-                  value="AZ"
-                  checked={filter.airlines.includes("AZ")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("AZ")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("AZ")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Alitalia Societa Aerea Italiana
-                </span>
-                {minimalPrice["AZ"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["AZ"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="Brussels Airlines">
-                <input
-                  className="aside__checkbox"
-                  name="SN"
-                  type="checkbox"
-                  value="SN"
-                  checked={filter.airlines.includes("SN")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("SN")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("SN")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Brussels Airlines
-                </span>
-                {minimalPrice["SN"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["SN"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="Finnair Oyj">
-                <input
-                  className="aside__checkbox"
-                  name="AY"
-                  type="checkbox"
-                  value="AY"
-                  checked={filter.airlines.includes("AY")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("AY")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("AY")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Finnair Oyj
-                </span>
-                {minimalPrice["AY"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["AY"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="KLM">
-                <input
-                  className="aside__checkbox"
-                  name="KL"
-                  type="checkbox"
-                  value="KL"
-                  checked={filter.airlines.includes("KL")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("KL")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("KL")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - KLM
-                </span>
-                {minimalPrice["KL"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["KL"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="LOT Polish Airlines">
-                <input
-                  className="aside__checkbox"
-                  name="LO"
-                  type="checkbox"
-                  value="LO"
-                  checked={filter.airlines.includes("LO")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("LO")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("LO")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - LOT Polish Airlines
-                </span>
-                {minimalPrice["LO"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["LO"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label
-                className="aside__label"
-                title="Pegasus Hava Tasimaciligi A.S."
-              >
-                <input
-                  className="aside__checkbox"
-                  name="PC"
-                  type="checkbox"
-                  value="PC"
-                  checked={filter.airlines.includes("PC")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("PC")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("PC")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Pegasus Hava Tasimaciligi A.S.
-                </span>
-                {minimalPrice["PC"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["PC"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label className="aside__label" title="TURK HAVA YOLLARI A.O.">
-                <input
-                  className="aside__checkbox"
-                  name="TK"
-                  type="checkbox"
-                  value="TK"
-                  checked={filter.airlines.includes("TK")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("TK")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("TK")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - TURK HAVA YOLLARI A.O.
-                </span>
-                {minimalPrice["TK"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["TK"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
-            <li className="aside__airlines-item">
-              <label
-                className="aside__label"
-                title="Аэрофлот - российские авиалинии"
-              >
-                <input
-                  className="aside__checkbox"
-                  name="SU"
-                  type="checkbox"
-                  value="SU"
-                  checked={filter.airlines.includes("SU")}
-                  onChange={handleOnChangeAirlines}
-                  disabled={!airlines.includes("SU")}
-                />
-                <span className="aside__checkbox-visible"></span>
-                <span
-                  className={`aside__checkbox-text ${
-                    !airlines.includes("SU")
-                      ? "aside__checkbox-text_disabled"
-                      : ""
-                  }`}
-                >
-                  {" "}
-                  - Аэрофлот - российские авиалинии
-                </span>
-                {minimalPrice["SU"] ? (
-                  <span className="aside__checkbox-price">{`от ${minimalPrice["SU"]} р.`}</span>
-                ) : null}
-              </label>
-            </li>
+            {AIRLINES_LIST.map((i, c) => (
+              <Airline key={c} code={i.code} caption={i.caption} />
+            ))}
           </ul>
         </div>
       </div>

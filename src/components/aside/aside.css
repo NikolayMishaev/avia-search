@@ -49,10 +49,6 @@
   list-style-type: none;
 }
 
-.aside__airlines-item {
-display: flex;
-}
-
 .aside__input-price {
  width: 167px;
  transition: all .6s;

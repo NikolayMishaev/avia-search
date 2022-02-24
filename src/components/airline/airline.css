@@ -1,0 +1,58 @@
+.airline__item {
+  display: flex;
+  }
+
+  .airline__label {
+    transition: all .5s;
+    position: relative;
+  }
+
+  .airline__label:hover {
+  cursor: pointer;
+  transform: translateX(-4px);
+  }
+
+  .airline__checkbox {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  
+  .airline__checkbox:disabled + .airline__checkbox-visible {
+    border-color:lightgray;
+  }
+  
+  .airline__checkbox-visible {
+    width: 11px;
+    height: 11px;
+    border: 1px solid #777777;
+    display: inline-block;
+    border-radius: 20%;
+    margin-right: 3px;
+  }
+  
+  .airline__checkbox-text {
+    width: 135px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin-left: 3px;
+  }
+  
+  .airline__checkbox-text_disabled{
+  color: lightgray
+  }
+  
+  .airline__checkbox:checked + .airline__checkbox-visible {
+    background: center / 9px no-repeat url(../../images/checkbox_success.png);
+    background-color: #FBEDCA;
+    }
+
+    .airline__checkbox-price {
+      position: absolute;
+      right: -75px;
+      top: -3px;
+    }
