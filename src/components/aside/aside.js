@@ -22,6 +22,8 @@ import debounce from "debounce";
 import { getMinValue } from "../../utils/utils";
 
 export default function Aside() {
+  const from1 = useSelector((state) => state.filter.priceFrom);
+  const to1 = useSelector((state) => state.filter.priceUpTo);
   const sort = useSelector((state) => state.sort.sortingCriteria);
   const filter = useSelector((state) => state.filter);
   const { airlines, loading, minimalPrice } = useSelector(
@@ -54,17 +56,20 @@ export default function Aside() {
       : dispatch(addPriceUpTo(Number(value || 0)));
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceFn = useCallback(debounce(handleInputValue, 1000), []);
+  const debounceFnFrom = useCallback(debounce(handleInputValue, 400), []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounceFnUpTo = useCallback(debounce(handleInputValue, 400), []);
 
   function handleChangePrice(e) {
     switch (e.target.name) {
       case "priceFrom":
         setPriceFrom(e.target.value);
-        debounceFn({ name: e.target.name, value: e.target.value });
+        debounceFnFrom({ name: e.target.name, value: e.target.value });
         break;
       case "priceUpTo":
         setPriceUpTo(e.target.value);
-        debounceFn({ name: e.target.name, value: e.target.value });
+        debounceFnUpTo({ name: e.target.name, value: e.target.value });
         break;
       default:
         break;
@@ -142,7 +147,9 @@ export default function Aside() {
       return false;
     });
     dispatch(setMinimalPrice(priceFrom));
-    // console.log(flights);
+    console.log("Всего:  " + flights.length);
+    console.log("От:  " + from1);
+    console.log("До:  " + to1);
     dispatch(addFlight(flights));
     // dispatch(setLoadingStatus(false));
 
